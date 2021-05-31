@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:listey/models/tasks_data.dart';
 class AddTasks extends StatelessWidget {
+  String newTask;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(child:Container(
@@ -19,6 +22,9 @@ class AddTasks extends StatelessWidget {
                 Text('Add Task',style:TextStyle(fontSize: 30.0,color: Colors.redAccent,fontWeight:FontWeight.bold,),
                   textAlign: TextAlign.center,),
                 TextField(
+                  onChanged: (nTask){
+                    newTask=nTask;
+                  },
                   autofocus: true,
                   textAlign: TextAlign.center,
                   cursorColor: Colors.redAccent,
@@ -34,7 +40,12 @@ class AddTasks extends StatelessWidget {
 
 
                 Padding(padding: EdgeInsets.only(top: 20.0),child:FlatButton(color: Colors.redAccent,
-                onPressed: (){}, child: Text('Add',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
+                onPressed: (){
+                  if(newTask==null){ Navigator.pop(context);}
+                  else{
+                  Provider.of<TaskData>(context).addTask(newTask);
+                  Navigator.pop(context);}
+                }, child: Text('Add',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
                     fontSize: 20.0),
                     )))
               ],
